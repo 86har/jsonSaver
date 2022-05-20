@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>簡単年齢診断</title>
+        <style>
+            body{
+                text-align: center;
+                font-family:"游ゴシック","ゴシック体";
+            }
+            .heading{
+                background: rgb(43, 42, 42);
+                color: white;
+                font-weight: 300;
+                border-radius: 20px 20px 0px 0px;
+                padding: 10px 0px;
+            }
+            .content{
+                border-radius: 20px 20px 0px 0px;
+                padding-bottom: 450px;
+                margin-bottom: 15px;
+                background: linear-gradient(#c5c5c5, #ffffff);
+            }
+            .input_text{
+                border-radius: 5px;
+                margin-left: 5px;
+                border: 1px solid;
+                border-color: #b1b1b1;
+                background-color: rgb(245, 243, 239);
+                font-size: 20px;
+            }
+            .label_input{
+                font-size: 20px;
+            }
+            .hedder_label_input{
+                font-size: 20px;
+                border-left: solid 4px ;
+                border-color:  #383838;
+                padding-left: 5px;
+            }
+            #result{
+                font-size: 20px;
+                font-weight: 800;
+            }
+
+            .js_diagnose1{
+                padding: 5px 15px;
+                font-size: 20px;
+                border-radius: 8px;
+                border: 1px solid;
+                border-color: #d4d4d4;
+                background-color: rgb(48, 154, 253);
+                font-family: "游ゴシック",sans-serif;
+                font-weight: 500;
+                margin: 10px 0px;
+                color: white;
+                cursor: pointer;
+            }
+            .js_diagnose2{
+                padding: 5px 15px;
+                font-size: 20px;
+                border-radius: 8px;
+                border: 1px solid;
+                border-color: #d4d4d4;
+                background-color: rgb(0, 132, 255);
+                font-family: "游ゴシック","ゴシック体";
+                font-weight: 500;
+                margin: 10px 0px;
+                color: white;
+                cursor: pointer;
+            }
+            .js_diagnose3{
+                padding: 5px 15px;
+                font-size: 20px;
+                border-radius: 8px;
+                border: 1px solid;
+                border-color: #d4d4d4;
+                background-color: rgb(21, 64, 105);
+                font-family: "游ゴシック","ゴシック体";
+                font-weight: 500;
+                margin: 10px 0px;
+                color: white;
+                cursor: pointer;
+            }
+            .select_down{
+                font-size: 20px;
+                background-color: rgb(245, 243, 239);
+                border: 1px solid;
+                border-radius: 5px;
+                border-color: #b1b1b1;
+                margin-bottom: 20px;
+                font-family: "游ゴシック",sans-serif;
+            }
+            .selected_button{
+                margin-left: 10px;
+                background-color: rgb(48, 154, 253);
+                border-radius: 8px;
+                border: 1px solid;
+                border-color:#d4d4d4;
+                color: white;
+                font-family: "游ゴシック",sans-serif;
+                font-size: 20px;
+                padding: 4px 15px;
+                cursor: pointer;
+            }
+            .selected_button2{
+                margin-left: 10px;
+                background-color: rgb(42, 132, 218);
+                border-radius: 8px;
+                border: 1px solid;
+                border-color:#d4d4d4;
+                color: white;
+                font-family: "游ゴシック",sans-serif;
+                font-size: 20px;
+                padding: 4px 15px;
+                cursor: pointer;
+            }
+            .result{
+                font-size: 20px;
+                font-weight: 800;
+            }
+            .label_input{
+                border-left: solid 4px ;
+                border-color:  #383838;
+                padding-left: 5px;
+            }
+            .border_red{
+                border-left: solid 4px ;
+                border-color:  #e25353;
+                padding-left: 5px;
+                font-size: 20px;
+            }
+            .border_bule{
+                border-left: solid 4px ;
+                border-color:  #00b7ff;
+                padding-left: 5px;
+                font-size: 20px;
+            }
+            .border_yellow{
+                border-left: solid 4px ;
+                border-color:  #fbff00;
+                padding-left: 5px;
+                font-size: 20px;
+            }
+            select{
+                font-weight: 500;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="content">
+            <h2 class="heading">年齢でわかる<br>簡単西暦&和暦診断</h2>
+            <p id="hedder">診断方式を入力してください</p>
+            <div class="row">
+                <label id="js_hedder_label_input" class="hedder_label_input" for="">入力方式 :
+                    <select class="select_down" id="js_select" name="" size="1" id="#">
+                        <option class="age" selected value="age">年齢</option>
+                        <option class="Year" value="Year">西暦</option>
+                        <option class="jaca" value="jaca">和暦</option>
+                    </select><button id="js_selected_button" class="selected_button">決定</button>
+                </label>                        
+            </div>
+            <div class="row"></div>
+                <div class="row">
+                    <label id="js_name" style="display: none;" class="label_input">名前 :<input class="input_text" type="text" id="js_name_input" placeholder="暖翔 (任意)"></label>
+                </div>
+                <div class="row">
+                    <label id="js_age" style="display: none;" class="label_input">年齢 :<input class="input_text" id="age" type="number" placeholder="14 (必須)"></label>
+                    <label id="js_Year" style="display: none;" class="label_input">西暦 :<input class="input_text" id="js_age_year" type="number" placeholder="2008 (必須)"></label>
+                    <div style="padding-left: 76px;">
+                        <label id="js_jaca" style=" display: none;" class="label_input">和暦 :
+                        <select class="select_down" style="display: none;" name="" id="js_jaca_select">
+                            <option value="reiwa">令和</option>
+                            <option selected value="heisei">平成</option>
+                            <option value="syowa">昭和</option>
+                            <option value="taisyo">大正</option>
+                        </select>   
+                        <input  class="input_text" id="js_jaca_age" type="number" placeholder="20 (必須)"></label>
+                    </div>
+                     <p style="visibility: hidden;" class="result" id="js_age_barsday">あなたの誕生西暦は、和暦はです</p>
+                     <button style="display: none;" class="js_diagnose1" id="js_diagnose">診断する</button>
+                    </div>
+            </div>
+        </div>
+        <script>
+            const nowtime=2022;
+
+            document.getElementById("js_diagnose").addEventListener('mouseout', () => {
+                document.getElementById("js_diagnose").className="js_diagnose1";
+            });
+
+            document.getElementById("js_diagnose").addEventListener('mouseover', () => {
+                document.getElementById("js_diagnose").className="js_diagnose2";
+            });
+
+            document.getElementById("js_selected_button").addEventListener('mouseout', () => {
+                document.getElementById("js_selected_button").className="selected_button";
+            });
+
+            document.getElementById("js_selected_button").addEventListener('mouseover', () => {
+                document.getElementById("js_selected_button").className="selected_button2";
+            });
+
+            document.getElementById("js_selected_button").onclick = function() {
+                if(document.getElementById("js_select").value=="age"){
+                    document.getElementById("hedder").innerText="名前と年齢を入力してください\n年齢は今年の新年齢を入力してください";
+                    document.getElementById("js_name").style.display="";
+                    document.getElementById("js_age").style.display="";
+                    document.getElementById("js_Year").style.display="none";
+                    document.getElementById("js_jaca").style.display="none";
+                    document.getElementById("js_jaca_select").style.display="none";
+                    document.getElementById("js_diagnose").style.display="";
+                    document.getElementById("js_hedder_label_input").className="border_red";
+                    document.getElementById("js_age").className="border_red";
+                    document.getElementById("js_name").className="border_red";
+                    document.getElementById("js_jaca").className="border_red";
+                    document.getElementById("js_Year").className="border_red";
+                        document.getElementById("js_diagnose").onclick = function() {
+                                let Year= nowtime-document.getElementById("age").value;
+                                if(Year > 2018){
+                                    var jacanumber = 2018;
+                                    var jacaname = "令和"
+                                }else if(Year > 1988){
+                                    var jacanumber = 1988;
+                                    var jacaname = "平成"
+                                }else if(Year > 1925){
+                                    var jacanumber = 1925;
+                                    var jacaname = "昭和"
+                                }else if(Year > 1911){
+                                    var jacanumber = 1911;
+                                    var jacaname = "大正";
+                                }
+                                let jaca = Year-jacanumber;
+                                
+                                    if(document.getElementById("age").value==""){
+                                        alert("年齢が入力されていないかデータ型が無効です")
+                                    }else{
+                                        if(document.getElementById("age").value <= 0){
+                                            alert("入力値が無効です\n1才以上で設定してください")
+                                        }else{
+                                            
+                                            if(document.getElementById("js_name_input").value==""){
+                                            let result = confirm(document.getElementById("age").value+'才でよろしいですか？');
+                                                if (result) {
+                                                    document.getElementById("js_age_barsday").style.visibility="visible";
+                                                    document.getElementById("js_age_barsday").textContent="あなたの誕生西暦は"+Year+"年、和暦は"+jacaname+""+jaca+"年です";
+                                                } else {}
+                                                    }else{
+                                                        let result = confirm(document.getElementById("js_name_input").value+"さんの年齢は"+document.getElementById("age").value+"才でよろしいですか？");
+                                                        if (result) {
+                                                            document.getElementById("js_age_barsday").style.visibility="visible";
+                                                            document.getElementById("js_age_barsday").textContent=document.getElementById("js_name_input").value+"さんの誕生西暦は"+Year+"年、和暦は"+jacaname+""+jaca+"年です";
+                                                        } else {}
+                                                        }
+                                            }   
+                                        
+                                        }                                      
+                        }
+                }else if(document.getElementById("js_select").value=="Year"){
+                    document.getElementById("hedder").innerText="名前と生まれた西暦を入力してください\n年齢は今年の新年齢を表示します";
+                    document.getElementById("js_name").style.display="";
+                    document.getElementById("js_age").style.display="none";
+                    document.getElementById("js_Year").style.display="";
+                    document.getElementById("js_jaca").style.display="none";
+                    document.getElementById("js_jaca_select").style.display="none";
+                    document.getElementById("js_diagnose").style.display="";
+                    document.getElementById("js_hedder_label_input").className="border_bule";
+                    document.getElementById("js_age").className="border_bule";
+                    document.getElementById("js_name").className="border_bule";
+                    document.getElementById("js_jaca").className="border_bule";
+                    document.getElementById("js_Year").className="border_bule";
+                        document.getElementById("js_diagnose").onclick = function() {
+                            let Year= document.getElementById("js_age_year").value;
+                                if(Year > 2018){
+                                    var jacanumber = 2018;
+                                    var jacaname = "令和"
+                                }else if(Year > 1988){
+                                    var jacanumber = 1988;
+                                    var jacaname = "平成"
+                                }else if(Year > 1925){
+                                    var jacanumber = 1925;
+                                    var jacaname = "昭和"
+                                }else if(Year > 1911){
+                                    var jacanumber = 1911;
+                                    var jacaname = "大正";
+                                }
+                                let jaca = Year-jacanumber;
+                                let newage = nowtime-document.getElementById("js_age_year").value;
+                                if(document.getElementById("js_age_year").value == ""){
+                                    alert("西暦が入力されていないかデータ型が無効です")
+                                    }else if (document.getElementById("js_age_year").value <= 1911){   
+                                            alert("西暦は1912年以上で入力して下さい")
+                                        }else if(document.getElementById("js_name_input").value == ""){
+                                            let result = confirm("あなたの誕生西暦は"+document.getElementById("js_age_year").value+"年でよろしいですか？");
+                                            if(result){
+                                                document.getElementById("js_age_barsday").style.visibility="visible";
+                                                document.getElementById("js_age_barsday").textContent="あなたの新年齢は"+newage+"才、和暦は"+jacaname+""+jaca+"年です";
+                                            }else{}
+                                                }else{
+                                                let result = confirm(document.getElementById("js_name_input").value+"さんの誕生西暦は"+document.getElementById("js_age_year").value+"年でよろしいですか？");
+                                                if (result) {
+                                                    document.getElementById("js_age_barsday").style.visibility="visible";
+                                                    document.getElementById("js_age_barsday").textContent=document.getElementById("js_name_input").value+"さんの新年齢は"+newage+"才、和暦は"+jacaname+""+jaca+"年です";
+                                                } else {}
+                            
+                        }
+                        
+                }
+                }else if(document.getElementById("js_select").value=="jaca"){
+                    document.getElementById("hedder").innerText="名前と生まれた和暦を入力してください\n年齢は今年の新年齢を表示します";
+                    document.getElementById("js_name").style.display="";
+                    document.getElementById("js_age").style.display="none";
+                    document.getElementById("js_Year").style.display="none";
+                    document.getElementById("js_jaca").style.display="";
+                    document.getElementById("js_jaca_select").style.display="";
+                    document.getElementById("js_diagnose").style.display="";
+                    document.getElementById("js_hedder_label_input").className="border_yellow";
+                    document.getElementById("js_age").className="border_yellow";
+                    document.getElementById("js_name").className="border_yellow";
+                    document.getElementById("js_jaca").className="border_yellow";
+                    document.getElementById("js_Year").className="border_yellow";
+                        document.getElementById("js_diagnose").onclick = function() {
+                            if(document.getElementById("js_jaca_select").value=="reiwa"){
+                                let jacanumber = parseInt(document.getElementById("js_jaca_age").value) + 2018;
+                                let newage = nowtime - jacanumber;
+                                console.log("newage"+newage)
+                                console.log("jacanumber"+jacanumber)
+                        
+
+                                if(document.getElementById("js_jaca_age").value == ""){
+                                alert("西暦が入力されていないかデータ型が無効です");
+                                    }else{
+                                        if(document.getElementById("js_jaca_age").value >=5){
+                                        alert("和暦の値が令和の場合は4以下で入力してください");
+                                            }else{ 
+                                                if(document.getElementById("js_jaca_age").value <=0){
+                                                alert("和暦の値は1以上で入力してください")
+                                            
+                                                }else{
+                                                    if(document.getElementById("js_name_input").value == ""){
+                                                    let result = confirm("あなたの誕生和暦は令和"+document.getElementById("js_jaca_age").value+"年でいいですか？");
+                                                    if(result){
+                                                        document.getElementById("js_age_barsday").style.visibility="visible"
+                                                        document.getElementById("js_age_barsday").textContent="あなたの新年齢は"+newage+"才、誕生西暦は"+jacanumber+"年です";
+                                                    }else{}
+                                                }else{
+                                                    let result = confirm(document.getElementById("js_name_input").value+"さんの誕生和暦は令和"+document.getElementById("js_jaca_age").value+"年でいいですか？");
+                                                    if(result){
+                                                        document.getElementById("js_age_barsday").style.visibility="visible"
+                                                        document.getElementById("js_age_barsday").textContent=document.getElementById("js_name_input").value+"さんの新年齢は"+newage+"才、誕生西暦は"+jacanumber+"年です";
+                                                    }else{}
+                                                }
+                        }}}}
+                            if(document.getElementById("js_jaca_select").value=="heisei"){
+                                let jacanumber = parseInt(document.getElementById("js_jaca_age").value) + 1988;
+                                let newage = nowtime - jacanumber;
+                                console.log("newage"+newage)
+                                console.log("jacanumber"+jacanumber)
+
+                                if(document.getElementById("js_jaca_age").value == ""){
+                                alert("西暦が入力されていないかデータ型が無効です");
+                                    }else{
+                                        if(document.getElementById("js_jaca_age").value >=32){
+                                        alert("和暦の値が平成の場合は31以下で入力してください");
+                                            }else{ 
+                                                if(document.getElementById("js_jaca_age").value <=0){
+                                                alert("和暦の値は1以上で入力してください")
+                                            
+                                                }else{
+                                                    if(document.getElementById("js_name_input").value == ""){
+                                                    let result = confirm("あなたの誕生和暦は平成"+document.getElementById("js_jaca_age").value+"年でいいですか？");
+                                                    if(result){
+                                                        document.getElementById("js_age_barsday").style.visibility="visible"
+                                                        document.getElementById("js_age_barsday").textContent="あなたの新年齢は"+newage+"才、誕生西暦は"+jacanumber+"年です";
+                                                    }else{}
+                                                }else{
+                                                    let result = confirm(document.getElementById("js_name_input").value+"さんの誕生和暦は平成"+document.getElementById("js_jaca_age").value+"年でいいですか？");
+                                                    if(result){
+                                                        document.getElementById("js_age_barsday").style.visibility="visible"
+                                                        document.getElementById("js_age_barsday").textContent=document.getElementById("js_name_input").value+"さんの新年齢は"+newage+"才、誕生西暦は"+jacanumber+"年です";
+                                                    }else{}
+                                                }
+                        }}}}
+                            if(document.getElementById("js_jaca_select").value=="syowa"){
+                                console.log("test ok")
+                                let jacanumber = parseInt(document.getElementById("js_jaca_age").value) + 1925;
+                                let newage = nowtime - jacanumber;
+                                console.log("newage"+newage)
+                                console.log("jacanumber"+jacanumber)
+
+                                if(document.getElementById("js_jaca_age").value == ""){
+                                alert("西暦が入力されていないかデータ型が無効です");
+                                    }else{
+                                        if(document.getElementById("js_jaca_age").value >=65){
+                                        alert("和暦の値が昭和の場合は64以下で入力してください");
+                                            }else{ 
+                                                if(document.getElementById("js_jaca_age").value <=0){
+                                                alert("和暦の値は1以上で入力してください")
+                                            
+                                                }else{
+                                                    if(document.getElementById("js_name_input").value == ""){
+                                                    let result = confirm("あなたの誕生和暦は昭和"+document.getElementById("js_jaca_age").value+"年でいいですか？");
+                                                    if(result){
+                                                        document.getElementById("js_age_barsday").style.visibility="visible"
+                                                        document.getElementById("js_age_barsday").textContent="あなたの新年齢は"+newage+"才、誕生西暦は"+jacanumber+"年です";
+                                                    }else{}
+                                                }else{
+                                                    let result = confirm(document.getElementById("js_name_input").value+"さんの誕生和暦は昭和"+document.getElementById("js_jaca_age").value+"年でいいですか？");
+                                                    if(result){
+                                                        document.getElementById("js_age_barsday").style.visibility="visible"
+                                                        document.getElementById("js_age_barsday").textContent=document.getElementById("js_name_input").value+"さんの新年齢は"+newage+"才、誕生西暦は"+jacanumber+"年です";
+                                                    }else{}
+                                                }
+                        }}}}
+                            if(document.getElementById("js_jaca_select").value=="taisyo"){
+                                let jacanumber = parseInt(document.getElementById("js_jaca_age").value) + 1911;
+                                let newage = nowtime - jacanumber;
+                                console.log("newage"+newage)
+                                console.log("jacanumber"+jacanumber)
+
+                                if(document.getElementById("js_jaca_age").value == ""){
+                                alert("西暦が入力されていないかデータ型が無効です");
+                                    }else{
+                                        if(document.getElementById("js_jaca_age").value >=16){
+                                        alert("和暦の値が大正の場合は15以下で入力してください");
+                                            }else{ 
+                                                if(document.getElementById("js_jaca_age").value <=0){
+                                                alert("和暦の値は1以上で入力してください")
+                                            
+                                                }else{
+                                                    if(document.getElementById("js_name_input").value == ""){
+                                                    let result = confirm("あなたの誕生和暦は大正"+document.getElementById("js_jaca_age").value+"年でいいですか？");
+                                                    if(result){
+                                                        document.getElementById("js_age_barsday").style.visibility="visible"
+                                                        document.getElementById("js_age_barsday").textContent="あなたの新年齢は"+newage+"才、誕生西暦は"+jacanumber+"年です";
+                                                    }else{}
+                                                }else{
+                                                    let result = confirm(document.getElementById("js_name_input").value+"さんの誕生和暦は大正"+document.getElementById("js_jaca_age").value+"年でいいですか？");
+                                                    if(result){
+                                                        document.getElementById("js_age_barsday").style.visibility="visible"
+                                                        document.getElementById("js_age_barsday").textContent=document.getElementById("js_name_input").value+"さんの新年齢は"+newage+"才、誕生西暦は"+jacanumber+"年です";
+                                                    }else{}
+                                                }
+                        }}}}
+                    }
+                    }
+                }
+        </script>
+    </body>
+</html>
